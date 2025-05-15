@@ -1,13 +1,14 @@
 package com.pacs.paymentsUtil;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.pacs.paymentsUtil.service.PainToPaymentService;
 
-@SpringBootApplication
 public class PaymentsUtilApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PaymentsUtilApplication.class, args);
+        PainToPaymentService painToPaymentService = new PainToPaymentService();
+        String pacsXml = painToPaymentService.convertToPain("PACS002","/Users/ashwinijayaraman/Downloads/sourceXml.xml" );
+        System.out.println(pacsXml);
 	}
 
 }
+

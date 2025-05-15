@@ -1,6 +1,5 @@
 package com.pacs.paymentsUtil.service;
 
-import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -10,15 +9,18 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.*;
 
-@Service
 public class XsdValidationService {
-    public boolean validateXMLSchema(String xsdVal, String xmlVal) throws IOException, SAXException {
+    public boolean validateXMLSchema(String xsdVal, String xmlPath, String xmlValue) throws IOException, SAXException {
         try {
             SchemaFactory factory =
                     SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema schema = factory.newSchema(new StreamSource(new StringReader(getFileFromLocation(xsdVal))));
             Validator validator = schema.newValidator();
-            validator.validate(new StreamSource(new StringReader(getFileFromLocation(xmlVal))));
+            if(null!=xmlPath) {
+                xmlValue=getFileFromLocation(xmlPath);
+            }
+            validator.validate(new StreamSource(new StringReader(xmlValue)));
+
         } catch (IOException e) {
             System.out.println("Exception: " + e.getMessage());
             throw e;

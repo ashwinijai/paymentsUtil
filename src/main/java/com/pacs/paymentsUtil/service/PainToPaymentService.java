@@ -7,27 +7,21 @@ import com.pacs.paymentsUtil.pacs.processor.OriginalGroupHeader17;
 import com.pacs.paymentsUtil.pain.processor.Document;
 import com.pacs.paymentsUtil.pain.processor.OriginalGroupInformation20;
 import com.pacs.paymentsUtil.utility.CommonUtility;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
-import javax.naming.spi.ObjectFactory;
 import javax.xml.bind.*;
 import javax.xml.namespace.QName;
 import javax.xml.transform.stream.StreamSource;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-@Service
-public class PainToPaymentService {
-    private static Logger logger = LoggerFactory.getLogger(PainToPaymentService.class);
 
+public class PainToPaymentService {
     public String convertToPain(String paymentType, String painPath) {
         if (paymentType.equals("PACS002")) {
             try {
                 return convertToPain(CommonUtility.getFileFromLocation(painPath));
             } catch (JAXBException e) {
-                logger.error(e.getMessage());
+                System.out.println(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -62,7 +56,6 @@ public class PainToPaymentService {
                 fIToFIPaymentStatusReportV10.getOrgnlGrpInfAndSts().add(originalGroupInfo);
             }
             pacsXml = convertToString(pacsDocument);
-            logger.info("Converted PACS xml - {}", pacsXml);
             System.out.println("Converted PACS xml - "+ pacsXml);
         }
         return pacsXml;
