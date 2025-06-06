@@ -1,0 +1,13 @@
+{
+  "mappingType": "LOOKUP",
+  "lookupTable": "T_GAMS_IACH_AUDIT_FILE_INFO",
+  "lookupColumns": ["DEST_CCY", "CR_DR_IND"],
+  "lookupKey": "FILE_ID",
+  "lookupKeyValue": "31",
+  "flowName":"RBCPACS",
+  "targetPath": [
+    {
+      "path": "Document/FIToFIPmtStsRpt/GrpHdr/MsgId"
+    }
+  ]
+}

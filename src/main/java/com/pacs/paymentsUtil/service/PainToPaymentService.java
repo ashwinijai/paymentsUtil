@@ -61,15 +61,12 @@ public class PainToPaymentService {
         return pacsXml;
     }
 
-    public static String convertToString(Object jaxbObject) throws JAXBException {
+    public static String convertToString(com.pacs.paymentsUtil.pacs.processor.Document jaxbObject) throws JAXBException {
         JAXBElement<?> jaxbElement = null;
         JAXBContext jaxbContext = JAXBContext.newInstance(jaxbObject.getClass());
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        if(jaxbObject instanceof com.pacs.paymentsUtil.pacs.processor.Document pacsDocument) {
-            jaxbElement
-                    = new JAXBElement<>(new QName("", "document"), com.pacs.paymentsUtil.pacs.processor.Document.class, pacsDocument);
-        }
+        jaxbElement = new JAXBElement<>(new QName("urn:iso:std:iso:20022:tech:xsd:pacs.002.001.10", "Document"), com.pacs.paymentsUtil.pacs.processor.Document.class, jaxbObject);
         if(null!=jaxbElement) {
             StringWriter sw = new StringWriter();
             jaxbMarshaller.marshal(jaxbElement, sw);
